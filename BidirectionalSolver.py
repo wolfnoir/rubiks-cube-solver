@@ -1,0 +1,1 @@
+# TODO: bidirectional search for solving the rubiks cube
