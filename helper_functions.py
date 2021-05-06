@@ -1,6 +1,7 @@
 from pycuber import *
 
 # some helper functions directly copied from the pycuber solver. THESE FILES ARE FROM PYCUBER, AND ARE NOT ORIGINAL
+# below are some helper functions for solving the 'cross' state of the algorithm
 
 
 def cross_rotate(edges, step):
