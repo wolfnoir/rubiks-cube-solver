@@ -20,7 +20,7 @@ def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
     h = state_value(start)
     f = g + h
     # get successors from start state
-    successors_stuff = successors(start, [])
+    successors_stuff = successors(start, path_actions(path)[-1] if len(path) != 1 else [])
     successor_list = []
     # if successors is empty, return failure and arbitrarily large f-limit
     if not successors_stuff:
