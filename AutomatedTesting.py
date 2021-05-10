@@ -1,6 +1,7 @@
 import pycuber as pc
 import datetime
 from RBFSSolver import RBFSSolver
+from AStarPycuberSolver import A_Star_Solver
 import os
 
 if __name__ == '__main__':
@@ -27,7 +28,10 @@ if __name__ == '__main__':
         cube(formula)
         # insert appropriate solving algorithm below
         if mode == "1":
-            print("A*")
+            solver = A_Star_Solver(cube)
+            result = solver.solve()
+            total_states += result[1]
+            total_depth += len(result[0])
         elif mode == "2":
             solver = RBFSSolver(cube)
             result = solver.solve()
