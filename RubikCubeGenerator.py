@@ -10,5 +10,5 @@ def createTestFile(size):
             writer.write(randomFormula)
     
 if __name__ == "__main__":
-    number = sys.argv[1]
+    number = int(sys.argv[1])
     createTestFile(number)
