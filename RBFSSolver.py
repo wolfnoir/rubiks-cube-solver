@@ -1,12 +1,17 @@
 import pycuber
+import datetime
 from pycuber import *
 from pycuber.solver.cfop import CrossSolver
 from pycuber.solver.cfop import F2LSolver
 from pycuber.solver.cfop import OLLSolver
 from pycuber.solver.cfop import PLLSolver
 
+states_explored = 0
+
 
 def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
+    global states_explored
+    states_explored += 1
     if is_goal(start):
         return [path, 0]
     if not path:
@@ -71,6 +76,7 @@ class RBFSSolver(object):
             print("Invalid Cube.")
         result = pycuber.Formula()
 
+        start = datetime.datetime.now()
         print("Solving Cross state")
         solver = RBFSCross(self.cube)
         cross = solver.solve()
@@ -90,7 +96,13 @@ class RBFSSolver(object):
         pll = solver.solve()
         result += pll
 
+        time_diff = datetime.datetime.now() - start
+        execution_time = time_diff.total_seconds() * 1000
+
         print(result)
+        print(f"States explored: {states_explored}")
+        print(f"Time elapsed: {execution_time} ms")
+        print(f"Depth of solution: {len(result)}")
 
 
 # EDITED/CHILD cross.py CLASS FROM PYCUBER
