@@ -7,6 +7,7 @@ from pycuber.solver.cfop import OLLSolver
 from pycuber.solver.cfop import PLLSolver
 
 states_explored = 0
+start_time = 0
 
 
 def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
@@ -35,6 +36,11 @@ def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
         successor_list.append(temp)
 
     while True:
+        global start_time
+        time_diff = datetime.datetime.now() - start_time
+        execution_time = time_diff.total_seconds() * 1000
+        if execution_time > 120000:
+            return []
         # sort successors by f-value
         successor_list.sort(key=lambda l: l[2])
         # best <-- lowest f-value in successors
@@ -77,9 +83,12 @@ class RBFSSolver(object):
             print("Invalid Cube.")
         result = pycuber.Formula()
 
-        start = datetime.datetime.now()
+        global start_time
+        start_time = datetime.datetime.now()
         solver = RBFSCross(self.cube)
         cross = solver.solve()
+        if not cross:
+            return [[], 0]
         result += cross
 
         solver = RBFS_F2L(self.cube)
@@ -94,7 +103,7 @@ class RBFSSolver(object):
         pll = solver.solve()
         result += pll
 
-        time_diff = datetime.datetime.now() - start
+        time_diff = datetime.datetime.now() - start_time
         execution_time = time_diff.total_seconds() * 1000
 
         print(result)

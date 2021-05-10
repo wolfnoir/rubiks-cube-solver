@@ -19,4 +19,4 @@ def createTestFile5(size):
 
 if __name__ == "__main__":
     number = int(sys.argv[1])
-    createTestFile(number)
+    createTestFile5(number)
