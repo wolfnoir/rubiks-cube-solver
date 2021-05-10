@@ -7,6 +7,7 @@ from pycuber.solver.cfop import OLLSolver
 from pycuber.solver.cfop import PLLSolver
 
 states_explored = 0
+start_time = 0
 
 # TODO: retrieving the number of explored state from pycuber's A* implementation
 
@@ -31,9 +32,14 @@ def a_star_search(start, successors, state_value, is_goal):
     p = [start]
     frontier = [(f, g, h, p)]
     while frontier:
+        global start_time
         f, g, h, path = frontier.pop(0)
         s = path[-1]
         for (action, state) in successors(s, path_actions(path)[-1] if len(path) != 1 else []):
+            time_diff = datetime.datetime.now() - start_time
+            execution_time = time_diff.total_seconds() * 1000
+            if execution_time > 120000:
+                return []
             if state not in explored:
                 path2 = path + [action, state]
                 h2 = state_value(state)
@@ -61,9 +67,12 @@ class A_Star_Solver(object):
             print("Invalid Cube.")
         result = pycuber.Formula()
 
-        start = datetime.datetime.now()
+        global start_time
+        start_time = datetime.datetime.now()
         solver = A_Star_Cross(self.cube)
         cross = solver.solve()
+        if not cross:
+            return [[], 0]
         result += cross
 
         solver = A_Star_F2L(self.cube)
@@ -78,7 +87,7 @@ class A_Star_Solver(object):
         pll = solver.solve()
         result += pll
 
-        time_diff = datetime.datetime.now() - start
+        time_diff = datetime.datetime.now() - start_time
         execution_time = time_diff.total_seconds() * 1000
 
         print(result)
