@@ -53,11 +53,12 @@ if __name__ == '__main__':
     time_diff = datetime.datetime.now() - start
     execution_time = time_diff.total_seconds() * 1000
     # calculate the average time of execution
-    avg_time = execution_time / num
+    success = num - skipped_files
+    avg_time = execution_time / success
     # calculate the average depth of solution
-    avg_depth = total_depth / num
+    avg_depth = total_depth / success
     # calculate the average number of states explored
-    avg_states = total_states / num
+    avg_states = total_states / success
     if mode == "1":
         print("A* Algorithm")
     elif mode == "2":
@@ -67,4 +68,4 @@ if __name__ == '__main__':
     print(f"Average Time: {avg_time} ms")
     print(f"Average Depth of Solution: {avg_depth}")
     print(f"Average States Explored: {avg_states}")
-    print(f"Number of successful test files: {num - skipped_files}")
+    print(f"Number of successful test files: {success}")
