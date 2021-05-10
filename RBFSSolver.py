@@ -71,23 +71,23 @@ class RBFSSolver(object):
     def __init__(self, cube):
         self.cube = cube
 
+    def feed(self, cube):
+        self.cube = cube
+
     def solve(self):
         if not self.cube.is_valid():
             print("Invalid Cube.")
         result = pycuber.Formula()
 
         start = datetime.datetime.now()
-        print("Solving Cross state")
         solver = RBFSCross(self.cube)
         cross = solver.solve()
         result += cross
 
-        print("Solving F2L state")
         solver = RBFS_F2L(self.cube)
         for i, f2l_single in enumerate(solver.solve(), 1):
             result += f2l_single[1]
 
-        print("Solving OLL and PLL states")
         solver = OLLSolver(self.cube)
         oll = solver.solve()
         result += oll
@@ -103,6 +103,7 @@ class RBFSSolver(object):
         print(f"States explored: {states_explored}")
         print(f"Time elapsed: {execution_time} ms")
         print(f"Depth of solution: {len(result)}")
+        return [result, states_explored]
 
 
 # EDITED/CHILD cross.py CLASS FROM PYCUBER
