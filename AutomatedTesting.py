@@ -19,9 +19,9 @@ if __name__ == '__main__':
     # start time
     start = datetime.datetime.now()
 
-    for filename in os.listdir("TestFiles5"):
+    for filename in os.listdir("TestFiles3"):
         num += 1
-        file = open("TestFiles5/" + filename)
+        file = open("TestFiles3/" + filename)
         file_contents = file.read()
         file.close()
         formula = pc.Formula(file_contents)

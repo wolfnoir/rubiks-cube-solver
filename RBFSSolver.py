@@ -7,7 +7,7 @@ from pycuber.solver.cfop import OLLSolver
 from pycuber.solver.cfop import PLLSolver
 
 states_explored = 0
-start_time = 0
+rbfs_start_time = 0
 
 
 def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
@@ -26,6 +26,11 @@ def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
     if not successors_stuff:
         return [-1, 999999]
 
+    time_diff = datetime.datetime.now() - rbfs_start_time
+    execution_time = time_diff.total_seconds() * 1000
+    if execution_time > 120000:
+        return [-1, 999999]
+
     # for each item in successors
     for (action, state) in successors_stuff:
         # get the f value of the state
@@ -36,11 +41,10 @@ def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
         successor_list.append(temp)
 
     while True:
-        global start_time
-        time_diff = datetime.datetime.now() - start_time
+        time_diff = datetime.datetime.now() - rbfs_start_time
         execution_time = time_diff.total_seconds() * 1000
         if execution_time > 120000:
-            return []
+            return [-1, 999999]
         # sort successors by f-value
         successor_list.sort(key=lambda l: l[2])
         # best <-- lowest f-value in successors
@@ -83,8 +87,8 @@ class RBFSSolver(object):
             print("Invalid Cube.")
         result = pycuber.Formula()
 
-        global start_time
-        start_time = datetime.datetime.now()
+        global rbfs_start_time
+        rbfs_start_time = datetime.datetime.now()
         solver = RBFSCross(self.cube)
         cross = solver.solve()
         if not cross:
@@ -103,7 +107,7 @@ class RBFSSolver(object):
         pll = solver.solve()
         result += pll
 
-        time_diff = datetime.datetime.now() - start_time
+        time_diff = datetime.datetime.now() - rbfs_start_time
         execution_time = time_diff.total_seconds() * 1000
 
         print(result)
@@ -133,6 +137,8 @@ class RBFSCross(CrossSolver):
             0,
             []
         )
+        if result_test[0] == -1:
+            return None
         result = Formula(path_actions(result_test[0]))
         self.cube(result)
         return result
