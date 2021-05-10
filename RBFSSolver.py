@@ -25,14 +25,12 @@ def rbfs_search(start, successors, state_value, is_goal, f_limit, g, path):
     if not successors_stuff:
         return [-1, 999999]
 
-    i = 0
     # for each item in successors
     for (action, state) in successors_stuff:
         # get the f value of the state
         new_f = state_value(state) + g + 1
         # get the max between the new f value and the previous one
         max_f = max(new_f, f)
-        i += 1
         temp = [action, state, max_f]
         successor_list.append(temp)
 
