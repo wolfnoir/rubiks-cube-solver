@@ -112,12 +112,16 @@ class BDS():
         print("States explored: " + str(self.exploredStates))
         print(f"Time elapsed: {execution_time} ms")
 
+# if __name__ == "__main__":
+#     b = BDS()
+#     b.solve("F2 L U F D")
+
 if __name__ == "__main__":
     goalCube = pc.Cube() # create goal Node
     goalFormula = ""
     goalAlg = pc.Formula(goalFormula)
     randomCube = pc.Cube() # create start Node
-    randomFormula = "R2 F' D L' F' R B2 D L U' F R2 U2 B2 R' U' F L2 B2 R U2 L2 B2 U2 R2"
+    randomFormula = "D R U' F L"
     randomAlg = pc.Formula(randomFormula)
     randomCube(randomAlg)
     startNode = cNode(randomCube, randomFormula)
