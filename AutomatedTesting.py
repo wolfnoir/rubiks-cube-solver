@@ -5,14 +5,16 @@ import os
 if __name__ == '__main__':
     # keeps track of the number of files read to calculate the average
     num = 0
+    numStates = 0
     # start time
     start = datetime.datetime.now()
 
-    for filename in os.listdir("TestFiles"):
+    for filename in os.listdir("TestFiles3"):
         num += 1
-        file = open("TestFiles/" + filename)
+        file = open("TestFiles3/" + filename)
         input = file.read()
         file.close()
+        print(filename)
         formula = pc.Formula(input)
         cube = pc.Cube()
         cube(formula)
