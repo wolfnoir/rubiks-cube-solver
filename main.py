@@ -13,4 +13,3 @@ if __name__ == '__main__':
     mycube(random)
 
     print(mycube)
-    print(dir(pc.solver.cfop))
