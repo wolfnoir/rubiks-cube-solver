@@ -15,13 +15,14 @@ Instructions for Download
 
 Generating New Tests
 - To generate additional test files, navigate to the folder with RubikCubeGenerator.py using the terminal.
-- Type “python RubikCubeGenerator.py [number of tests to generate]
+- Type "python RubikCubeGenerator.py [number of tests to generate]"
 - To change the number of moves per test, navigate to the RubikCubeGenerator.py file and edit the appropriate number.
 - Store the tests in a separate folder.
 
 Running Automated Tests
-- In AutomatedTesting.py, change the folder directory to the folder you wish to test.
+- In AutomatedTesting.py, edit the code to change the folder directory to the folder you wish to test.
 - To run the automated tests, navigate to the folder with AutomatedTesting.py using the terminal.
+- Type "python AutomatedTesting.py".
 - Select which algorithm to run by typing 1, 2, or 3. 
 
 Software Requirements:
