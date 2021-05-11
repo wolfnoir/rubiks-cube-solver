@@ -2,6 +2,7 @@ import pycuber as pc
 import datetime
 from RBFSSolver import RBFSSolver
 from AStarPycuberSolver import A_Star_Solver
+from BidirectionalSolver import BDS
 import os
 
 if __name__ == '__main__':
@@ -19,9 +20,9 @@ if __name__ == '__main__':
     # start time
     start = datetime.datetime.now()
 
-    for filename in os.listdir("TestFiles5"):
+    for filename in os.listdir("TestFiles3"):
         num += 1
-        file = open("TestFiles5/" + filename)
+        file = open("TestFiles3/" + filename)
         file_contents = file.read()
         file.close()
         formula = pc.Formula(file_contents)
@@ -49,6 +50,9 @@ if __name__ == '__main__':
                 skipped_files += 1
         elif mode == "3":
             print("Bidirectional Search")
+            solver = BDS()
+            result = solver.solve(file_contents)
+            total_states += solver.exploredStates
 
     time_diff = datetime.datetime.now() - start
     execution_time = time_diff.total_seconds() * 1000
