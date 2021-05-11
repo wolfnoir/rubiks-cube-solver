@@ -4,6 +4,7 @@ from util import cNode
 import copy
 import datetime
 
+start_time = 0
 class BDS():
 
     def __init__(self):
@@ -13,15 +14,21 @@ class BDS():
 
     def BDSSolver(self, startNode, endNode):
         print("Starting Bidirectional Search")
+        global start_time
+        # start_time = datetime.datetime.now()
         if startNode.cube == endNode.cube: # initial check if the start state is the goal state
             return startNode
         frontier = [startNode, endNode]
         while frontier != []: 
             currentNode = frontier.pop(0)
+            # if (datetime.datetime.now() - start_time).seconds > 180:
+            #     return None
             self.explored.append(currentNode)
             for action in currentNode.actions: # for each avaliable action create a new node with that state
                 self.exploredStates += 1
                 newNode = self.createNewNode(currentNode, action)
+                # if (datetime.datetime.now() - start_time).seconds > 180:
+                #     return None
                 if not self.checkStateExists(newNode, frontier) and not self.checkStateExists(newNode, self.explored): # if cube state doesnt exist added it to frontier
                     frontier.append(newNode)
                 else: # if cube state exists in frontier or explored 
@@ -104,36 +111,11 @@ class BDS():
         endNode.direction = 1
         start = datetime.datetime.now()
         goal = self.BDSSolver(startNode, endNode)
-        actionsTaken = self.getActionsTaken()
+        if goal != None:
+            actionsTaken = self.getActionsTaken()
         time_diff = datetime.datetime.now() - start
         execution_time = time_diff.total_seconds() * 1000
         print("Moves taken: " + str(actionsTaken))
         # print("States explored: " + str(len(self.explored)))
         print("States explored: " + str(self.exploredStates))
         print(f"Time elapsed: {execution_time} ms")
-
-# if __name__ == "__main__":
-#     b = BDS()
-#     b.solve("F2 L U F D")
-
-if __name__ == "__main__":
-    goalCube = pc.Cube() # create goal Node
-    goalFormula = ""
-    goalAlg = pc.Formula(goalFormula)
-    randomCube = pc.Cube() # create start Node
-    randomFormula = "D R U' F L"
-    randomAlg = pc.Formula(randomFormula)
-    randomCube(randomAlg)
-    startNode = cNode(randomCube, randomFormula)
-    endNode = cNode(goalCube, goalFormula)
-    endNode.direction = 1
-    BiDirectionalSolver = BDS()
-    start = datetime.datetime.now()
-    goal = BiDirectionalSolver.BDSSolver(startNode, endNode)
-    actionsTaken = BiDirectionalSolver.getActionsTaken()
-    time_diff = datetime.datetime.now() - start
-    execution_time = time_diff.total_seconds() * 1000
-    print("Moves taken: " + str(actionsTaken))
-    # print("States explored: " + str(len(BiDirectionalSolver.explored)))
-    print("States explored: " + str(BiDirectionalSolver.exploredStates))
-    print(f"Time elapsed: {execution_time} ms")
