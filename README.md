@@ -9,6 +9,10 @@ solve( )            (function)
 f2l.py 
 F2LPairSolver        (class)
 
+Instructions for Download
+- Download the whole project from GitHub.
+- Install the PyCuber library.
+
 Generating New Tests
 - To generate additional test files, navigate to the folder with RubikCubeGenerator.py using the terminal.
 - Type “python RubikCubeGenerator.py [number of tests to generate]
